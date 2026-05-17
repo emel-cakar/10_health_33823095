@@ -1,9 +1,7 @@
-// Middleware: blocks access to protected routes if user is not logged in
-// Add this to any route that requires a login
-
+// redirect to login if the user isn't logged in
 function requireLogin(req, res, next) {
     if (req.session && req.session.userId) {
-        next(); // user is logged in, continue to the route
+        next();
     } else {
         res.redirect('/login');
     }

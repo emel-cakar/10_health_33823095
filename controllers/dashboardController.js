@@ -1,23 +1,22 @@
 const db = require('../config/db');
 
-// Dashboard — shows summary stats and recent workouts for the logged-in user
 exports.index = async (req, res) => {
     const userId = req.session.userId;
 
     try {
-        // Total number of workouts logged
+        // total workouts logged
         const [[countRow]] = await db.query(
             'SELECT COUNT(*) AS total FROM workouts WHERE user_id = ?',
             [userId]
         );
 
-        // Total minutes trained (SUM returns null if no rows, so default to 0)
+        // total minutes, defaults to 0 if nothing logged yet
         const [[minsRow]] = await db.query(
             'SELECT COALESCE(SUM(duration_mins), 0) AS totalMins FROM workouts WHERE user_id = ?',
             [userId]
         );
 
-        // Most recent 5 workouts
+        // last 5 workouts
         const [recent] = await db.query(
             'SELECT * FROM workouts WHERE user_id = ? ORDER BY workout_date DESC LIMIT 5',
             [userId]

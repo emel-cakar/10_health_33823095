@@ -1,16 +1,14 @@
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
 
-// Show the registration form
 exports.showRegister = (req, res) => {
     res.render('register', { error: null });
 };
 
-// Handle registration form submission
 exports.register = async (req, res) => {
     const { username, email, password } = req.body;
 
-    // --- Validation: check for empty fields before hitting the database ---
+    // basic checks before touching the database
     if (!username || !username.trim()) {
         return res.render('register', { error: 'Username is required.' });
     }
@@ -22,7 +20,7 @@ exports.register = async (req, res) => {
     }
 
     try {
-        // Check if username or email already exists
+        // check if username or email is already taken
         const [existing] = await db.query(
             'SELECT id FROM users WHERE username = ? OR email = ?',
             [username, email]
@@ -32,7 +30,7 @@ exports.register = async (req, res) => {
             return res.render('register', { error: 'Username or email already taken.' });
         }
 
-        // Hash the password before storing it (never store plain text passwords)
+        // hash the password before saving it
         const hash = await bcrypt.hash(password, 10);
 
         await db.query(
@@ -47,12 +45,10 @@ exports.register = async (req, res) => {
     }
 };
 
-// Show the login form
 exports.showLogin = (req, res) => {
     res.render('login', { error: null });
 };
 
-// Handle login form submission
 exports.login = async (req, res) => {
     const { username, password } = req.body;
 
@@ -68,18 +64,16 @@ exports.login = async (req, res) => {
 
         const user = rows[0];
 
-        // Compare the submitted password against the stored hash
+        // compare what was typed against the stored hash
         const match = await bcrypt.compare(password, user.password_hash);
 
         if (!match) {
             return res.render('login', { error: 'Invalid username or password.' });
         }
 
-        // Save user info to session so we know who is logged in
         req.session.userId   = user.id;
         req.session.username = user.username;
 
-        // Send the user to their dashboard after a successful login
         res.redirect('/dashboard');
     } catch (err) {
         console.error(err);
@@ -87,7 +81,6 @@ exports.login = async (req, res) => {
     }
 };
 
-// Log the user out by destroying their session
 exports.logout = (req, res) => {
     req.session.destroy(() => {
         res.redirect('/');

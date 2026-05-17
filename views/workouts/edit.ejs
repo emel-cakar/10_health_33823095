@@ -35,10 +35,7 @@
 
         <div class="form-group">
             <label for="workout_date">Date *</label>
-            <!--
-                MySQL returns workout_date as a JS Date object, not a plain string.
-                .toISOString().slice(0, 10) converts it to YYYY-MM-DD which the date input needs.
-            -->
+            <!-- slice to get YYYY-MM-DD format for the date input -->
             <input type="date" id="workout_date" name="workout_date"
                    value="<%= new Date(workout.workout_date).toISOString().slice(0, 10) %>" required>
         </div>

@@ -11,7 +11,7 @@
 
         <div class="form-group">
             <label for="exercise_name">Exercise Name *</label>
-            <!-- old.exercise_name repopulates the field if validation fails -->
+            <!-- keeps the value if the form fails validation -->
             <input type="text" id="exercise_name" name="exercise_name"
                    placeholder="e.g. Running, Bench Press, Yoga"
                    value="<%= old.exercise_name || '' %>" required>

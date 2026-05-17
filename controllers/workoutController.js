@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Show all workouts for the logged-in user, with optional search
 exports.index = async (req, res) => {
     const userId  = req.session.userId;
     const search  = req.query.search  || '';
@@ -10,7 +9,7 @@ exports.index = async (req, res) => {
         let query  = 'SELECT * FROM workouts WHERE user_id = ?';
         let params = [userId];
 
-        // If search is provided, filter by exercise name or category
+        // filter by name or category if search is used
         if (search) {
             query += ' AND (exercise_name LIKE ? OR category LIKE ?)';
             params.push(`%${search}%`, `%${search}%`);
@@ -27,20 +26,17 @@ exports.index = async (req, res) => {
     }
 };
 
-// Show the add workout form
 exports.showAdd = (req, res) => {
     res.render('workouts/add', { error: null, old: {} });
 };
 
-// Handle add workout form submission
 exports.add = async (req, res) => {
     const { exercise_name, category, duration_mins, notes, workout_date } = req.body;
     const userId = req.session.userId;
 
-    // Keep submitted values so the form can refill them if there's an error
+    // keep values so the form refills on error
     const old = { exercise_name, category, duration_mins, notes, workout_date };
 
-    // Validation
     if (!exercise_name || !exercise_name.trim()) {
         return res.render('workouts/add', { error: 'Exercise name is required.', old });
     }
@@ -76,13 +72,12 @@ exports.add = async (req, res) => {
     }
 };
 
-// Show the edit form for a specific workout
 exports.showEdit = async (req, res) => {
     const userId    = req.session.userId;
     const workoutId = req.params.id;
 
     try {
-        // Check the workout belongs to the logged-in user before showing it
+        // make sure the workout belongs to the logged in user
         const [rows] = await db.query(
             'SELECT * FROM workouts WHERE id = ? AND user_id = ?',
             [workoutId, userId]
@@ -99,13 +94,12 @@ exports.showEdit = async (req, res) => {
     }
 };
 
-// Handle edit form submission
 exports.update = async (req, res) => {
     const userId    = req.session.userId;
     const workoutId = req.params.id;
     const { exercise_name, category, duration_mins, notes, workout_date } = req.body;
 
-    // Re-render the edit form with an error and the submitted values still showing
+    // re-render the edit form with the submitted values still showing
     const renderError = async (msg) => {
         const [rows] = await db.query(
             'SELECT * FROM workouts WHERE id = ? AND user_id = ?',
@@ -115,7 +109,6 @@ exports.update = async (req, res) => {
         return res.render('workouts/edit', { workout, error: msg });
     };
 
-    // Validation
     if (!exercise_name || !exercise_name.trim()) {
         return renderError('Exercise name is required.');
     }
@@ -152,7 +145,6 @@ exports.update = async (req, res) => {
     }
 };
 
-// Delete a workout
 exports.delete = async (req, res) => {
     const userId    = req.session.userId;
     const workoutId = req.params.id;

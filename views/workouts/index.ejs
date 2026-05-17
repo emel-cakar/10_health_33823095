@@ -5,12 +5,11 @@
     <a href="/workouts/add" class="btn-primary">+ Add Workout</a>
 </section>
 
-<!-- Success message — only shows when redirected with ?success= -->
 <% if (success) { %>
     <div class="alert alert-success"><%= success %></div>
 <% } %>
 
-<!-- Search form -->
+<!-- search bar -->
 <form action="/workouts" method="GET" class="search-form">
     <input
         type="text"
@@ -56,7 +55,7 @@
                 <div class="workout-actions">
                     <a href="/workouts/<%= workout.id %>/edit" class="btn-edit">Edit</a>
 
-                    <!-- Delete uses a form POST (HTML forms don't support DELETE natively) -->
+                    <!-- form used because HTML forms only support GET and POST -->
                     <form action="/workouts/<%= workout.id %>/delete" method="POST"
                           onsubmit="return confirm('Delete this workout?')">
                         <button type="submit" class="btn-delete">Delete</button>
