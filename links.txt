@@ -1,7 +1,7 @@
-home=DEPLOYED_URL/
-about=DEPLOYED_URL/about
-login=DEPLOYED_URL/login
-register=DEPLOYED_URL/register
-dashboard=DEPLOYED_URL/dashboard
-workouts=DEPLOYED_URL/workouts
-add_workout=DEPLOYED_URL/workouts/add
+home=https://fittrack-production-ba64.up.railway.app/
+about=https://fittrack-production-ba64.up.railway.app/about
+login=https://fittrack-production-ba64.up.railway.app/login
+register=https://fittrack-production-ba64.up.railway.app/register
+dashboard=https://fittrack-production-ba64.up.railway.app/dashboard
+workouts=https://fittrack-production-ba64.up.railway.app/workouts
+add_workout=https://fittrack-production-ba64.up.railway.app/workouts/add
