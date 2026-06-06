@@ -2,10 +2,10 @@
   "name": "fittrack",
   "version": "1.0.0",
   "description": "A workout logging web app built with Node.js, Express, EJS and MySQL",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

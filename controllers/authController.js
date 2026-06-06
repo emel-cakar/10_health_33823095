@@ -15,8 +15,13 @@ exports.register = async (req, res) => {
     if (!email || !email.trim()) {
         return res.render('register', { error: 'Email is required.' });
     }
-    if (!password || password.length < 6) {
-        return res.render('register', { error: 'Password must be at least 6 characters.' });
+
+    // password must be 8+ chars with uppercase, lowercase, number and special character
+    const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!password || !passwordRule.test(password)) {
+        return res.render('register', {
+            error: 'Password must be at least 8 characters and include an uppercase letter, lowercase letter, number and special character.'
+        });
     }
 
     try {

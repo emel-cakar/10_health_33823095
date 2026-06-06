@@ -1,8 +1,8 @@
 # FitTrack database setup
 # run this first before starting the app
 
-CREATE DATABASE IF NOT EXISTS fittrack;
-USE fittrack;
+CREATE DATABASE IF NOT EXISTS health;
+USE health;
 
 # stores user accounts
 CREATE TABLE IF NOT EXISTS users (

@@ -45,7 +45,8 @@ app.use((req, res) => {
     res.status(404).render('404');
 });
 
-const PORT = process.env.PORT || 3000;
+// must run on port 8000 as per assignment requirements
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`FitTrack running at http://localhost:${PORT}`);
 });

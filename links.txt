@@ -1,0 +1,7 @@
+home=DEPLOYED_URL/
+about=DEPLOYED_URL/about
+login=DEPLOYED_URL/login
+register=DEPLOYED_URL/register
+dashboard=DEPLOYED_URL/dashboard
+workouts=DEPLOYED_URL/workouts
+add_workout=DEPLOYED_URL/workouts/add
