@@ -3,6 +3,8 @@
 FitTrack is a web application that lets users log and track their personal workouts.
 Built as part of a university Dynamic Web Applications module using Node.js, Express, EJS and MySQL.
 
+**Live site:** https://fittrack-production-ba64.up.railway.app
+
 ---
 
 ## Features
@@ -18,7 +20,7 @@ Built as part of a university Dynamic Web Applications module using Node.js, Exp
 
 ```
 fittrack/
-├── app.js                  - main Express application
+├── index.js                - main Express application
 ├── config/db.js            - MySQL database connection
 ├── controllers/            - logic for auth, workouts and dashboard
 ├── middleware/auth.js      - protects routes that require login
@@ -35,8 +37,8 @@ fittrack/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/emel-cakar/Fittrack.git
-cd fittrack
+git clone https://github.com/emel-cakar/10_health_33823095.git
+cd 10_health_33823095
 ```
 
 ### 2. Install dependencies
@@ -49,7 +51,7 @@ npm install
 
 Open MySQL Workbench and run these two files in order:
 
-1. `sql/create_db.sql` — creates the fittrack database and tables
+1. `sql/create_db.sql` — creates the health database and tables
 2. `sql/insert_test_data.sql` — inserts sample users and workouts for testing
 
 ### 4. Set up the environment file
@@ -60,19 +62,19 @@ Copy the example file and fill in your own MySQL password:
 cp .env.example .env
 ```
 
-Open `.env` and change:
+Open `.env` and update:
 
 ```
-DB_PASSWORD=your_mysql_root_password
+HEALTH_PASSWORD=your_mysql_root_password
 ```
 
 ### 5. Start the server
 
 ```bash
-npm start
+node index.js
 ```
 
-Visit `http://localhost:3000` in your browser.
+Visit `http://localhost:8000` in your browser.
 
 ---
 
@@ -80,6 +82,7 @@ Visit `http://localhost:3000` in your browser.
 
 | Username | Password |
 |---|---|
+| gold | smiths123ABC$ |
 | john_doe | password123 |
 | jane_fit | password123 |
 
