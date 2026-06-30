@@ -9,7 +9,6 @@ exports.index = async (req, res) => {
         let query  = 'SELECT * FROM workouts WHERE user_id = ?';
         let params = [userId];
 
-        // filter by name or category if search is used
         if (search) {
             query += ' AND (exercise_name LIKE ? OR category LIKE ?)';
             params.push(`%${search}%`, `%${search}%`);
@@ -34,7 +33,7 @@ exports.add = async (req, res) => {
     const { exercise_name, category, duration_mins, notes, workout_date } = req.body;
     const userId = req.session.userId;
 
-    // keep values so the form refills on error
+    // keep form values if validation fails
     const old = { exercise_name, category, duration_mins, notes, workout_date };
 
     if (!exercise_name || !exercise_name.trim()) {
@@ -77,7 +76,6 @@ exports.showEdit = async (req, res) => {
     const workoutId = req.params.id;
 
     try {
-        // make sure the workout belongs to the logged in user
         const [rows] = await db.query(
             'SELECT * FROM workouts WHERE id = ? AND user_id = ?',
             [workoutId, userId]
@@ -99,7 +97,6 @@ exports.update = async (req, res) => {
     const workoutId = req.params.id;
     const { exercise_name, category, duration_mins, notes, workout_date } = req.body;
 
-    // re-render the edit form with the submitted values still showing
     const renderError = async (msg) => {
         const [rows] = await db.query(
             'SELECT * FROM workouts WHERE id = ? AND user_id = ?',

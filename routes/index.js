@@ -11,7 +11,6 @@ router.get('/about', (req, res) => {
     res.render('about');
 });
 
-// dashboard is only accessible when logged in
 router.get('/dashboard', requireLogin, dashboardController.index);
 
 module.exports = router;

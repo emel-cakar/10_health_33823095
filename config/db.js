@@ -1,7 +1,6 @@
 const mysql = require('mysql2');
 require('dotenv').config();
 
-// connect to MySQL using credentials from .env
 const pool = mysql.createPool({
     host:     process.env.HEALTH_HOST,
     user:     process.env.HEALTH_USER,

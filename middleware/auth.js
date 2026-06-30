@@ -1,4 +1,3 @@
-// redirect to login if the user isn't logged in
 function requireLogin(req, res, next) {
     if (req.session && req.session.userId) {
         next();

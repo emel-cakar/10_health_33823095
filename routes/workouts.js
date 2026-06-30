@@ -3,7 +3,6 @@ const router = express.Router();
 const workoutController = require('../controllers/workoutController');
 const { requireLogin } = require('../middleware/auth');
 
-// all routes here require login
 router.use(requireLogin);
 
 router.get('/',            workoutController.index);

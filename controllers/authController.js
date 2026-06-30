@@ -8,7 +8,6 @@ exports.showRegister = (req, res) => {
 exports.register = async (req, res) => {
     const { username, email, password } = req.body;
 
-    // basic checks before touching the database
     if (!username || !username.trim()) {
         return res.render('register', { error: 'Username is required.' });
     }
@@ -16,7 +15,6 @@ exports.register = async (req, res) => {
         return res.render('register', { error: 'Email is required.' });
     }
 
-    // password must be 8+ chars with uppercase, lowercase, number and special character
     const passwordRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     if (!password || !passwordRule.test(password)) {
         return res.render('register', {
@@ -25,7 +23,6 @@ exports.register = async (req, res) => {
     }
 
     try {
-        // check if username or email is already taken
         const [existing] = await db.query(
             'SELECT id FROM users WHERE username = ? OR email = ?',
             [username, email]
@@ -35,7 +32,6 @@ exports.register = async (req, res) => {
             return res.render('register', { error: 'Username or email already taken.' });
         }
 
-        // hash the password before saving it
         const hash = await bcrypt.hash(password, 10);
 
         await db.query(
@@ -68,8 +64,6 @@ exports.login = async (req, res) => {
         }
 
         const user = rows[0];
-
-        // compare what was typed against the stored hash
         const match = await bcrypt.compare(password, user.password_hash);
 
         if (!match) {
